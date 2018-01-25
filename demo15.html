@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>作用域插槽用于列表项</title>
+</head>
+<body>
+    <div id="example-1">
+        <!-- 父组件调用实例中的data数据v-bind:my-items="items" -->
+        <!-- my-items为组建中props的值 ，items为实例中data的值-->
+
+        <my-awesome-list v-bind:my-items="items">
+            <!-- 作用域插槽也可以是具名的 -->
+            <li slot="item" slot-scope="props" class="my-fancy-item">
+                {{ props.text }}
+            </li>
+        </my-awesome-list>
+    </div>
+    
+    <script>
+        Vue.component('my-awesome-list',{
+            props:['myItems'],
+            template:`
+            <ul>
+                <slot name="item"
+                v-for="item in myItems"
+                v-bind:text="item.text">
+
+                </slot>
+            </ul>
+            `
+        })
+        new Vue({
+            el:'#example-1',
+            data:{
+                items:[
+                    {text:'one'},
+                    {text:'two'},
+                    {text:'three'}
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+
+<body>
+<!-- 我们可以用 v-bind 来动态地将 prop 绑定到父组件的数据 -->
+<!-- 每当父组件的数据变化时，该变化也会传导给子组件 -->
+    <div id="example-1">
+        <input v-model="parentMsg">
+        <br>
+        <child v-bind:my-message="parentMsg"></child>
+    </div>
+    <script>
+        Vue.component('child',{
+            props: ['myMessage'],
+            template: '<span>{{ myMessage }}</span>'
+        })
+
+        new Vue({
+            el:'#example-1',
+            data:{
+                parentMsg:' '
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>列表渲染</title>
+</head>
+<body>
+    <!-- 用v-for把一个数组对应为一组元素 -->
+    <ul id="example-1">
+        <li v-for="item in items">
+            {{item.message}}
+        </li>
+    </ul>
+
+     <!-- v-for 还支持一个可选的第二个参数为当前项的索引 -->
+     <ul id="example-2">
+        <!-- 也可以用of代替in 作为分隔符 -->
+        <li v-for="(item,index) in items">   
+            {{parentMessage}}-{{index}}-{{item.message}}
+        </li>
+     </ul>
+
+    <!-- 用 v-for 通过一个对象的属性来迭 -->
+     <!-- 也可以提供第二个的参数为键名(可选) -->
+     <!-- 第三个参数为索引(可选) -->
+     <ul id="v-for-object" class="demo">
+         <!-- 建议尽可能在使用 v-for 时提供 key -->
+        <li v-for="(value,key,index) in object" :key="value.id">
+            {{index}}.{{key}}:{{value}}
+        </li>
+        <br />
+        <!-- 显示过滤/排序结果,使用计算属性-->
+        <li v-for="n in evenNumbers">{{n}}</li>
+        <br />
+        <!-- 在计算属性不适用时(例如,在嵌套 v-for 循环中) 可以使用一个 method 方法 -->
+        <li v-for="n in even(numbers)">{{n}}</li>
+     </ul>
+
+
+     
+
+    <script>
+        var example=new Vue({
+            el:'#example-1',
+            data:{
+                items:[
+                    {message:'Foo'},
+                    {message:'Bar'}
+                ]
+            }
+        });
+
+        var example2=new Vue({
+            el:'#example-2',
+            data:{
+                parentMessage:'Parent',
+                items:[
+                    {message:'Foo'},
+                    {message:'Bar'}
+                ]
+            }
+        });
+
+        var example3=new Vue({
+            el:'#v-for-object',
+            data:{
+                object:{
+                    firstName:'John',
+                    lastName:'Doe',
+                    age:30
+                },
+                /* 我们想要显示一个数组的过滤或排序副本，而不实际改变或重置原始数据。
+                在这种情况下，可以创建返回过滤或排序数组的计算属性。 */
+                numbers:[1,2,3,4,5]
+            },
+            computed:{
+                evenNumbers:function () {
+                    return this.numbers.filter(function (number) {
+                        return number%2 === 0;
+                    })
+                }
+            },
+            methods:{
+                even:function (numbers) {
+                    return numbers.filter(function (number) {
+                        return number%2 === 0;
+                    })
+                }
+            }
+                
+        });
+        
+    </script>
+</body>
+</html>
